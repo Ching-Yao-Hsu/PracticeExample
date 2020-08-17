@@ -14,12 +14,13 @@
         <Button x:Name="btn_Run" Content="執行" HorizontalAlignment="Left" Margin="50,301,0,0" Click="btn_RunClick" RenderTransformOrigin="9.98,13.048" Width="108" Height="42" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
         <Label x:Name="lbl_InfoMsg" Content="" Margin="50,22,0,0" Height="250" Visibility="Visible" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" VerticalAlignment="Top" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="240"/>
         <Button x:Name="btn_Close" Content="停止  " HorizontalAlignment="Right" Margin="0,301,220,0" Click="btn_CloseClick" RenderTransformOrigin="9.98,13.048" Width="111" Height="42" VerticalAlignment="Top" Grid.Column="1"/>
-        <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="259,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}" FontSize="24" Text="k01792"/>
+        <TextBox x:Name="txt_SupplyNo" Grid.Column="1" HorizontalAlignment="Left" Margin="259,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}" FontSize="24" Text="K01792"/>
         <Label Content="帳號" Grid.Column="1" HorizontalAlignment="Left" Margin="202,26,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="-0.125,0.623"/>
-        <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="259,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}" FontSize="24" Text="536468"/>
+        <TextBox x:Name="txt_Password" Grid.Column="1" HorizontalAlignment="Left" Margin="259,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}" FontSize="24" Text="536468"/>
         <Label Content="密碼" Grid.Column="1" HorizontalAlignment="Left" Margin="202,66,0,0" VerticalAlignment="Top" FontSize="16"/>
         <Image x:Name="Img_Test" Grid.Column="1" HorizontalAlignment="Left" Height="100" Margin="223,118,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.216,0.223"/>
         <Label x:Name="lbl_Test" Content="Label" Grid.Column="1" HorizontalAlignment="Left" Margin="237,232,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btn_test" Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="257,322,0,0" VerticalAlignment="Top" Click="btn_test_Click"/>
 
     </Grid>
 </Window>
