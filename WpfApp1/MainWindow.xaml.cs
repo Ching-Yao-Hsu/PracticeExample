@@ -119,139 +119,91 @@ namespace WpfApp1
 
         private async void btn_CloseClick(object sender, RoutedEventArgs e)
         {
-            var cookieContainer = new CookieContainer();
-            HttpWebRequest request;
             string ValCode;
+            string resHtml;
+            HttpWebRequest request;
             IList<KeyValuePair<string, string>> nameValueCollection;
-
-            #region -- 資料組成 --
-
-            request = (HttpWebRequest)HttpWebRequest.Create("https://amis.afa.gov.tw/coop1/CoopVegLogin1.aspx");
-            request.CookieContainer = cookieContainer;
-            //set the user agent and accept header values, to simulate a real web browser
-            request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36";
-            request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9";
-
-
-            //SET AUTOMATIC DECOMPRESSION
-            request.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
-            
-            Debug.WriteLine("FIRST RESPONSE");
-            Debug.WriteLine(string.Empty);
-            using (WebResponse response = request.GetResponse())
-            {
-                using (StreamReader sr = new StreamReader(response.GetResponseStream()))
-                {
-                    string a = sr.ReadToEnd();
-
-                    nameValueCollection = await Crawler.Todo_AngleSharp.GetHtmlDocument(a, "form input");
-                    if (nameValueCollection.Count <= 0)
-                    {
-                        throw new Exception("886");
-                    }
-                    Debug.WriteLine(sr.ReadToEnd());
-                }
-            }
-
-
-            request = (HttpWebRequest)HttpWebRequest.Create("https://amis.afa.gov.tw/CreateValidationCodeImage.aspx");
-            request.CookieContainer = cookieContainer;
-            //set the user agent and accept header values, to simulate a real web browser
-            request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36";
-            request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9";
-
-
-            //SET AUTOMATIC DECOMPRESSION
-            request.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
-
-            Debug.WriteLine("FIRST RESPONSE");
-            Debug.WriteLine(string.Empty);
-            using (WebResponse response = request.GetResponse())
-            {
-                using (BinaryReader sr = new BinaryReader(response.GetResponseStream()))
-                {
-                    Byte[] a = sr.ReadBytes(1 * 1024 * 1024 * 10);
-                    ValCode = Crawler.Todo_Tesseract3_3.GetImgText(a);
-                    if (ValCode.Length > 4)
-                    {
-                        ValCode = ValCode.Substring(0,4);
-                    }
-                }
-            }
-
-
-            #endregion
-
-            #region -- Post --
-            request = (HttpWebRequest)HttpWebRequest.Create("https://amis.afa.gov.tw/coop1/CoopVegLogin1.aspx");
-            //set the cookie container object
-            request.CookieContainer = cookieContainer;
-            request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36";
-            request.Accept = "*/*";
-
-            //set method POST and content type application/x-www-form-urlencoded
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-
-            //SET AUTOMATIC DECOMPRESSION
-            request.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
-
-            //insert your username and password
-            
+            CookieContainer cookieContainer = new CookieContainer();
             string FormData_Name_SupplyNo = "ctl00$contentPlaceHolder$txtSupplyNo";
             string FormData_Name_Password = "ctl00$contentPlaceHolder$txtPassword";
             string FormData_Name_ValCode = "ctl00$contentPlaceHolder$txtValCode";
-            DataCollation.ListItemReplace(ref nameValueCollection, FormData_Name_SupplyNo, txt_SupplyNo.Text);
-            DataCollation.ListItemReplace(ref nameValueCollection, FormData_Name_Password, txt_Password.Text);
-            DataCollation.ListItemReplace(ref nameValueCollection, FormData_Name_ValCode, ValCode);
 
-            nameValueCollection.Add(new KeyValuePair<string, string>("__ASYNCPOST", "true"));
-            nameValueCollection.Add(new KeyValuePair<string, string>("ctl00$ScriptManager_Master", "ctl00$contentPlaceHolder$UpdatePanel1|ctl00$contentPlaceHolder$btnLogin"));
+            #region -- 登入帳號Flow --
 
+            #region -- 1.Post登入資料組成 --
 
-            string data = string.Join("&", nameValueCollection.Select(x => string.Format("{0}={1}", WebUtility.UrlEncode(x.Key), WebUtility.UrlEncode(x.Value))));
-            //data = HttpUtility.UrlEncode(data);
-            //data = string.Format("ctl00$contentPlaceHolder$txtSupplyNo={0}&FormData_Name_Password={1}&ctl00$contentPlaceHolder$txtValCode={2}", txt_SupplyNo.Text, txt_Password, code);
-            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(data);
+            #region -- A.導覽登入頁面，並且取得相關Cookie資訊 以及 組成Post資料相關資訊的物件 --
 
-            request.ContentLength = bytes.Length;
-
-            using (Stream dataStream = request.GetRequestStream())
-            {
-                dataStream.Write(bytes, 0, bytes.Length);
-                dataStream.Close();
-            }
-
-            Console.WriteLine("LOGIN RESPONSE");
-            Console.WriteLine();
-            using (WebResponse response = request.GetResponse())
-            {
-                using (StreamReader sr = new StreamReader(response.GetResponseStream()))
-                {
-                    string a = sr.ReadToEnd();
-                    Debug.WriteLine(sr.ReadToEnd());
-                }
-            }
-
-            request = (HttpWebRequest)HttpWebRequest.Create("https://amis.afa.gov.tw/coop1/CoopVegSupplierTransInfoQuery.aspx");
+            request = (HttpWebRequest)HttpWebRequest.Create("https://amis.afa.gov.tw/coop1/CoopVegLogin1.aspx");
             request.CookieContainer = cookieContainer;
             //set the user agent and accept header values, to simulate a real web browser
             request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36";
             request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9";
-
-
             //SET AUTOMATIC DECOMPRESSION
             request.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
+            resHtml = Use_WebClient.Get_ResponseHtml(ref request);
+            nameValueCollection = await Crawler.Todo_AngleSharp.GetHtmlDocument(resHtml, "form input");
 
-            Debug.WriteLine("FIRST RESPONSE");
-            Debug.WriteLine(string.Empty);
-            using (WebResponse response = request.GetResponse())
-            {
-                using (StreamReader sr = new StreamReader(response.GetResponseStream()))
-                {
-                    string a = sr.ReadToEnd();
-                }
-            }
+            #endregion
+
+            #region -- B.取得驗證碼 --
+
+            request = (HttpWebRequest)HttpWebRequest.Create("https://amis.afa.gov.tw/CreateValidationCodeImage.aspx");
+            request.CookieContainer = cookieContainer;
+            request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36";
+            request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9";
+            request.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
+            var img_byte = Use_WebClient.Get_ResponseImg(ref request, 4);
+            ValCode = Crawler.Todo_Tesseract3_3.GetImgText(img_byte);
+            ValCode = (ValCode.Length > 4) ? ValCode.Substring(0, 4) : ValCode;
+
+            #endregion
+
+            #region -- C.填寫帳號登入等相關資訊 --
+
+            DataCollation.ListItemReplace(ref nameValueCollection, FormData_Name_SupplyNo, txt_SupplyNo.Text);
+            DataCollation.ListItemReplace(ref nameValueCollection, FormData_Name_Password, txt_Password.Text);
+            DataCollation.ListItemReplace(ref nameValueCollection, FormData_Name_ValCode, ValCode);
+            //__ASYNCPOST 以及 ctl00$ScriptManager_Master無法從html得知，所以才用手動寫入的方式填寫
+            nameValueCollection.Add(new KeyValuePair<string, string>("__ASYNCPOST", "true"));
+            nameValueCollection.Add(new KeyValuePair<string, string>("ctl00$ScriptManager_Master", "ctl00$contentPlaceHolder$UpdatePanel1|ctl00$contentPlaceHolder$btnLogin"));
+
+            #endregion
+
+            #endregion
+
+            #region -- 2.登入Post請求發送 --
+
+            request = (HttpWebRequest)HttpWebRequest.Create("https://amis.afa.gov.tw/coop1/CoopVegLogin1.aspx");
+            request.CookieContainer = cookieContainer;
+            request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36";
+            request.Accept = "*/*";
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
+            string data = string.Join("&", nameValueCollection.Select(x => string.Format("{0}={1}", WebUtility.UrlEncode(x.Key), WebUtility.UrlEncode(x.Value))));
+            byte[] bytes = Encoding.UTF8.GetBytes(data);
+            request.ContentLength = bytes.Length;
+            Use_WebClient.WriteFormDataIntoRequest(ref request, bytes);
+            resHtml = Use_WebClient.Get_ResponseHtml(ref request);
+            resHtml = WebUtility.UrlDecode(resHtml);
+
+            #endregion
+
+            #endregion
+
+            #region -- 取得水果相關資訊 --
+
+            #region -- 1.進入登入後的頁面 --
+
+            request = (HttpWebRequest)HttpWebRequest.Create("https://amis.afa.gov.tw/coop1/CoopVegSupplierTransInfoQuery.aspx");
+            request.CookieContainer = cookieContainer;
+            request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36";
+            request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9";
+            request.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
+            resHtml = Use_WebClient.Get_ResponseHtml(ref request);
+
+            #endregion
 
             #endregion
 
