@@ -1173,11 +1173,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Ryan\\專案\\程式\\WpfApp1\\RyanExample\\RyanExample.csproj",
+      "projectUniqueName": "C:\\Ryan\\專案\\WpfApp1\\RyanExample\\RyanExample.csproj",
       "projectName": "RyanExample",
-      "projectPath": "C:\\Ryan\\專案\\程式\\WpfApp1\\RyanExample\\RyanExample.csproj",
+      "projectPath": "C:\\Ryan\\專案\\WpfApp1\\RyanExample\\RyanExample.csproj",
       "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-      "outputPath": "C:\\Ryan\\專案\\程式\\WpfApp1\\RyanExample\\obj\\",
+      "outputPath": "C:\\Ryan\\專案\\WpfApp1\\RyanExample\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"

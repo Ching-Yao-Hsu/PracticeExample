@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using AngleSharp;
+using AngleSharp.Dom;
 using OpenCvSharp;
 using Tesseract;
 
@@ -34,26 +35,135 @@ namespace RyanExample
             /// <param name="str_Document">HtmlDocument</param>
             /// <param name="QuerySelectorAll">Html的element選擇條件</param>
             /// <returns></returns>
-            public static async Task<IList<KeyValuePair<string, string>>> GetHtmlDocument(string str_Document,string QuerySelectorAll) 
+            public static async Task<List<KeyValuePair<string, string>>> GetHtmlDocument(string str_Document, string QuerySelectorAll) 
             {
-                IList<KeyValuePair<string, string>> input = new List<KeyValuePair<string, string>>();
+                List<KeyValuePair<string, string>> input = new List<KeyValuePair<string, string>>();
 
-                var document = await context.OpenAsync(res => res.Content(str_Document));
+                var _document = await context.OpenAsync(res => res.Content(str_Document));
 
-                if (document != null)
+                if (_document != null)
                 {
-                    var contents = document.QuerySelectorAll("form input");
+                    var contents = _document.QuerySelectorAll(QuerySelectorAll);
 
                     if (contents != null)
                     {
-                        foreach (var item in contents)
+                        if (QuerySelectorAll.ToLower().Contains("form input"))
                         {
-                            input.Add(new KeyValuePair<string, string>(item.GetAttribute("name"), item.GetAttribute("value")));
+                            foreach (var item in contents)
+                            {
+                                var name = item.GetAttribute("name");
+                                var value = item.GetAttribute("value");
+                                value = string.IsNullOrEmpty(value) ? string.Empty : value;
+                                input.Add(new KeyValuePair<string, string>(name, value));
+                            }
+                        }
+                        else {
+                            foreach (var item in contents)
+                            {
+                                AngleSharp.Dom.IHtmlCollection<AngleSharp.Dom.IElement> option = item.QuerySelectorAll("option:checked");
+                                if (option.Count() > 0)
+                                {
+                                    var name = item.GetAttribute("name");
+                                    var value = option.FirstOrDefault().GetAttribute("value");
+                                    value = string.IsNullOrEmpty(value) ? string.Empty : value;
+                                    input.Add(new KeyValuePair<string, string>(name, value));
+                                }
+                                else {
+                                    option = item.QuerySelectorAll("option");
+                                    if (option.Count() > 0)
+                                    {
+                                        var name = item.GetAttribute("name");
+                                        var value = option.FirstOrDefault().GetAttribute("value");
+                                        value = string.IsNullOrEmpty(value) ? string.Empty : value;
+                                        input.Add(new KeyValuePair<string, string>(name, value));
+                                    }
+                                }
+                            }
                         }
                     }
                 }
 
                 return input;
+            }
+            /// <summary>
+            /// 取得HtmlDocument內的element資訊
+            /// </summary>
+            /// <param name="str_Document">HtmlDocument</param>
+            /// <param name="QuerySelectorAll">Html的element選擇條件</param>
+            /// <param name="QueryCondition">選擇checkbox的條件</param>
+            /// <returns></returns>
+            public static async Task<List<KeyValuePair<string, string>>> GetHtmlDocument(string str_Document, string QuerySelectorAll,string QueryCondition) 
+            {
+                List<KeyValuePair<string, string>> element = new List<KeyValuePair<string, string>>();
+
+                var _document = await context.OpenAsync(res => res.Content(str_Document));
+
+                if (_document != null)
+                {
+                    var contents = _document.QuerySelector(QuerySelectorAll);
+
+                    if (contents != null)
+                    {
+                        switch (QuerySelectorAll)
+                        {
+                            case "span#ctl00_contentPlaceHolder_ucCoopVegFruitMarket_chklMarket":
+                                string[] QueryCondition_Ary = QueryCondition.Split(',');
+                                var span_chk = contents.QuerySelectorAll(QuerySelectorAll + ">span");
+
+                                foreach (var item in span_chk)
+                                {
+                                    var attr = item.GetAttribute("marketno");
+                                    if (attr != null) 
+                                    {
+                                        if (QueryCondition_Ary.Any(m => m.Equals(attr)))
+                                        {
+                                            var input = item.QuerySelector("input");
+                                            if (input != null)
+                                            {
+                                                var name = input.GetAttribute("name");
+                                                var value = "on";
+                                                element.Add(new KeyValuePair<string, string>(name, value));
+                                            }
+
+                                            
+                                        }
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                }
+
+                return element;
+            }
+            public static async Task<List<List<string>>> GetVegFruitMarketData(string str_HtmlDataTable,string QuerySelectorAll) 
+            {
+                List<List<string>> data_tr = new List<List<string>>();
+
+                var html_table = await context.OpenAsync(res => res.Content(str_HtmlDataTable));
+
+                if (html_table != null)
+                {
+                    var temp_table_tr = html_table.QuerySelectorAll(QuerySelectorAll);
+                    var table = temp_table_tr.Parent("table").FirstOrDefault();
+                    var table_tr = table.QuerySelectorAll("tr:not(.main_title)");
+
+                    foreach (var tr in table_tr)
+                    {
+                        var table_td = tr.QuerySelectorAll("td");
+                        if (table_td.Count() > 0)
+                        {
+                            var data_td = new List<string>();
+                            foreach (var td in table_td)
+                            {
+                                data_td.Add(td.TextContent);
+                            }
+                            data_tr.Add(data_td);
+                        }
+                    }
+                }
+
+                return data_tr;
             }
         }
 

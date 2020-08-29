@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "486On9yMEIofuRsrUo5L3Z8lS/CFgHxu0mN9cox3gw8g2qQBO8IcZKKdsz04ATqdIUKxmNCf0hESry04PMUHdQ==",
+  "dgSpecHash": "TS9/OUt9teQdXn+b98RnCispyMWpPbE2dH7AqWALzWkuzjW5sQJNyxGG7sC/wKzuSlV0RgwySoComNCWcfxuHg==",
   "success": true,
-  "projectFilePath": "C:\\Ryan\\專案\\程式\\WpfApp1\\RyanExample\\RyanExample.csproj",
+  "projectFilePath": "C:\\Ryan\\專案\\WpfApp1\\RyanExample\\RyanExample.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DELL\\.nuget\\packages\\anglesharp\\0.14.0\\anglesharp.0.14.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",

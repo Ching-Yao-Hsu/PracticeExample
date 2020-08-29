@@ -5,22 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="386" Width="488">
+        Title="台北農產價錢" Height="439" Width="916">
     <Grid HorizontalAlignment="Right" Width="510">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="37*"/>
             <ColumnDefinition Width="143*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="btn_Run" Content="執行" HorizontalAlignment="Left" Margin="50,301,0,0" Click="btn_RunClick" RenderTransformOrigin="9.98,13.048" Width="108" Height="42" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <Label x:Name="lbl_InfoMsg" Content="" Margin="50,22,0,0" Height="250" Visibility="Visible" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" VerticalAlignment="Top" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="240"/>
-        <Button x:Name="btn_Close" Content="停止  " HorizontalAlignment="Right" Margin="0,301,220,0" Click="btn_CloseClick" RenderTransformOrigin="9.98,13.048" Width="111" Height="42" VerticalAlignment="Top" Grid.Column="1"/>
+        <Button x:Name="btn_Run" Content="執行" HorizontalAlignment="Right" Margin="0,283,141,0" Click="btn_RunClick" RenderTransformOrigin="9.98,13.048" Width="68" Height="42" VerticalAlignment="Top" Grid.Column="1" Visibility="Hidden"/>
+        <Button x:Name="btn_Close" Content="執行" Margin="203,304,0,0" Click="btn_CloseClick" RenderTransformOrigin="9.98,13.048" Grid.Column="1" HorizontalAlignment="Left" Width="176" Height="41" VerticalAlignment="Top"/>
         <TextBox x:Name="txt_SupplyNo" Grid.Column="1" HorizontalAlignment="Left" Margin="259,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}" FontSize="24" Text="K01792"/>
-        <Label Content="帳號" Grid.Column="1" HorizontalAlignment="Left" Margin="202,26,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="-0.125,0.623"/>
-        <TextBox x:Name="txt_Password" Grid.Column="1" HorizontalAlignment="Left" Margin="259,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}" FontSize="24" Text="536468"/>
-        <Label Content="密碼" Grid.Column="1" HorizontalAlignment="Left" Margin="202,66,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <Image x:Name="Img_Test" Grid.Column="1" HorizontalAlignment="Left" Height="100" Margin="223,118,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.216,0.223"/>
-        <Label x:Name="lbl_Test" Content="Label" Grid.Column="1" HorizontalAlignment="Left" Margin="237,232,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btn_test" Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="257,322,0,0" VerticalAlignment="Top" Click="btn_test_Click"/>
+        <Label Content="帳號" Grid.Column="1" HorizontalAlignment="Left" Margin="196,25,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="-0.125,0.623"/>
+        <Label Content="密碼" Grid.Column="1" HorizontalAlignment="Left" Margin="196,66,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="-0.221,0.35"/>
+        <Image x:Name="Img_Code" Grid.Column="1" HorizontalAlignment="Left" Height="40" Margin="264,141,0,0" VerticalAlignment="Top" Width="119" RenderTransformOrigin="0.216,0.223" OpacityMask="#FFBFCDDB"/>
+        <Label x:Name="lbl_Code" Content="驗證碼" Grid.Column="1" HorizontalAlignment="Left" Margin="259,103,0,0" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}" Height="33" Width="120" FontSize="20"/>
+        <Label Content="驗證碼" Grid.Column="1" HorizontalAlignment="Left" Margin="196,104,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="0.664,2.298"/>
+        <Label Content="驗證碼圖" Grid.Column="1" HorizontalAlignment="Left" Margin="188,147,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="0.664,2.298"/>
+        <PasswordBox x:Name="pad_Password" Grid.Column="1" HorizontalAlignment="Left" Margin="259,66,0,0" VerticalAlignment="Top" Width="120" Height="30" Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}" Password="536468"/>
+        <DatePicker x:Name="dap_Start" Grid.Column="1" HorizontalAlignment="Left" Margin="264,195,0,0" VerticalAlignment="Top" SelectedDateFormat="Short"/>
+        <DatePicker x:Name="dap_End" Grid.Column="1" HorizontalAlignment="Left" Margin="264,239,0,0" VerticalAlignment="Top"/>
+        <Label Content="開始日期" Grid.Column="1" HorizontalAlignment="Left" Margin="188,189,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="0.664,2.298"/>
+        <Label Content="結束日期" Grid.Column="1" HorizontalAlignment="Left" Margin="188,233,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="0.664,2.298"/>
+        <DataGrid x:Name="dag_Show" Margin="-374,25,222,0" Grid.ColumnSpan="2" Height="361" VerticalAlignment="Top" AutoGeneratingColumn="dag_Show_AutoGeneratingColumn"/>
 
     </Grid>
 </Window>

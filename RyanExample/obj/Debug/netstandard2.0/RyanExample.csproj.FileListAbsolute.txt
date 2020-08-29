@@ -20,3 +20,16 @@ C:\Ryan\專案\程式\WpfApp1\RyanExample\obj\Debug\netstandard2.0\RyanExample.A
 C:\Ryan\專案\程式\WpfApp1\RyanExample\obj\Debug\netstandard2.0\RyanExample.csproj.CoreCompileInputs.cache
 C:\Ryan\專案\程式\WpfApp1\RyanExample\obj\Debug\netstandard2.0\RyanExample.dll
 C:\Ryan\專案\程式\WpfApp1\RyanExample\obj\Debug\netstandard2.0\RyanExample.pdb
+C:\Ryan\專案\WpfApp1\RyanExample\bin\Debug\netstandard2.0\x86\liblept1753.dll
+C:\Ryan\專案\WpfApp1\RyanExample\bin\Debug\netstandard2.0\x86\libtesseract3052.dll
+C:\Ryan\專案\WpfApp1\RyanExample\bin\Debug\netstandard2.0\x64\liblept1753.dll
+C:\Ryan\專案\WpfApp1\RyanExample\bin\Debug\netstandard2.0\x64\libtesseract3052.dll
+C:\Ryan\專案\WpfApp1\RyanExample\bin\Debug\netstandard2.0\RyanExample.deps.json
+C:\Ryan\專案\WpfApp1\RyanExample\bin\Debug\netstandard2.0\RyanExample.dll
+C:\Ryan\專案\WpfApp1\RyanExample\bin\Debug\netstandard2.0\RyanExample.pdb
+C:\Ryan\專案\WpfApp1\RyanExample\obj\Debug\netstandard2.0\RyanExample.csprojAssemblyReference.cache
+C:\Ryan\專案\WpfApp1\RyanExample\obj\Debug\netstandard2.0\RyanExample.AssemblyInfoInputs.cache
+C:\Ryan\專案\WpfApp1\RyanExample\obj\Debug\netstandard2.0\RyanExample.AssemblyInfo.cs
+C:\Ryan\專案\WpfApp1\RyanExample\obj\Debug\netstandard2.0\RyanExample.csproj.CoreCompileInputs.cache
+C:\Ryan\專案\WpfApp1\RyanExample\obj\Debug\netstandard2.0\RyanExample.dll
+C:\Ryan\專案\WpfApp1\RyanExample\obj\Debug\netstandard2.0\RyanExample.pdb

@@ -21,7 +21,7 @@ namespace WpfApp1.Libarary
             return doc_html;
         }
 
-        public static Byte[] Get_ResponseImg(ref HttpWebRequest _request,int number_length)
+        public static Byte[] Get_ResponseImg(ref HttpWebRequest _request)
         {
             Byte[] ValCode;
 
