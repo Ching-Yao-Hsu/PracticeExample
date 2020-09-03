@@ -259,7 +259,6 @@ namespace WpfApp1
 
             #endregion
 
-
             #region -- 3.
             List<VegFruitMarketSupplyPrice> supplyPrices = new List<VegFruitMarketSupplyPrice>();
             var table_data = await Crawler.Todo_AngleSharp.GetVegFruitMarketData(resHtml, "table tr.main_main");

@@ -145,20 +145,28 @@ namespace RyanExample
                 if (html_table != null)
                 {
                     var temp_table_tr = html_table.QuerySelectorAll(QuerySelectorAll);
-                    var table = temp_table_tr.Parent("table").FirstOrDefault();
-                    var table_tr = table.QuerySelectorAll("tr:not(.main_title)");
 
-                    foreach (var tr in table_tr)
+                    if (temp_table_tr.Any())
                     {
-                        var table_td = tr.QuerySelectorAll("td");
-                        if (table_td.Count() > 0)
+                        var table = temp_table_tr.Parent("table").FirstOrDefault();
+
+                        if (table != null)
                         {
-                            var data_td = new List<string>();
-                            foreach (var td in table_td)
+                            var table_tr = table.QuerySelectorAll("tr:not(.main_title)");
+
+                            foreach (var tr in table_tr)
                             {
-                                data_td.Add(td.TextContent);
+                                var table_td = tr.QuerySelectorAll("td");
+                                if (table_td.Count() > 0)
+                                {
+                                    var data_td = new List<string>();
+                                    foreach (var td in table_td)
+                                    {
+                                        data_td.Add(td.TextContent);
+                                    }
+                                    data_tr.Add(data_td);
+                                }
                             }
-                            data_tr.Add(data_td);
                         }
                     }
                 }
